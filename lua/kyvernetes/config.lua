@@ -16,7 +16,6 @@ M.linters_by_ft = {
   typescriptreact = { "eslint_d" },
   verilog = { "verilator" },
   yaml = { "yamllint", "actionlint" },
-  ["yaml.ansible"] = { "ansible_lint" },
 }
 
 local prettier = { "prettierd", "prettier" }

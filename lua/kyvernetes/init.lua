@@ -21,8 +21,20 @@ require("kyvernetes.options")
 -- set custom filetypes
 vim.filetype.add({
   pattern = {
-    [".*playbook.*%.ya?ml"] = "yaml.ansible",
-    ["%.ansible%.ya?ml"] = "yaml.ansible",
+    [".*playbook%.ya?ml"] = "yaml.ansible",
+    [".*site%.ya?ml"] = "yaml.ansible",
+    [".*main%.ya?ml"] = "yaml.ansible",
+    [".*local%.ya?ml"] = "yaml.ansible",
+    [".*requirements%.ya?ml"] = "yaml.ansible",
+    [".*/tasks/.*%.ya?ml"] = "yaml.ansible",
+    [".*/roles/.*%.ya?ml"] = "yaml.ansible",
+    [".*/handlers/.*%.ya?ml"] = "yaml.ansible",
+    [".*/group_vars/.*"] = "yaml.ansible",
+    [".*/host_vars/.*"] = "yaml.ansible",
+    [".*%.ansible%.ya?ml"] = "yaml.ansible",
+  },
+  extension = {
+    j2 = "jinja2",
   },
 })
 
