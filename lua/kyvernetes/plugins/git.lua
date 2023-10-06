@@ -2,11 +2,19 @@ return {
   { "rawnly/gist.nvim", cmd = { "CreateGist", "CreateGistFromFile" } },
   {
     "lewis6991/gitsigns.nvim",
-    event = "VeryLazy",
+    event = { "BufReadPost", "BufNewFile" },
     opts = {
       current_line_blame = true,
+      signs = {
+        add = { text = "▎" },
+        change = { text = "▎" },
+        delete = { text = "" },
+        topdelete = { text = "" },
+        changedelete = { text = "▎" },
+        untracked = { text = "▎" },
+      },
       on_attach = function(bufnr)
-        local gs = require("gitsigns")
+        local gs = package.loaded.gitsigns
         local map = vim.keymap.set
 
         -- navigate through hunks

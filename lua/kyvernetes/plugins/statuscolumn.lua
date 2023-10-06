@@ -1,6 +1,7 @@
 return {
   {
     "luukvbaal/statuscol.nvim",
+    dependencies = { "gitsigns.nvim" },
     event = "VeryLazy",
     config = function()
       local builtin = require("statuscol.builtin")

@@ -1,15 +1,17 @@
 local attach = require("kyvernetes.plugins.lsp.attach")
-local codelldb_extension_path = vim.env.HOME .. "/lsp-dap/codelldb/extension"
-local codelldb_path = codelldb_extension_path .. "/adapter/codelldb"
-local liblldb_path = codelldb_extension_path .. "/lldb/lib/liblldb.so"
-
-local ltex_bin = vim.env.HOME .. "/lsp-dap/ltex-ls/bin/ltex-ls"
 
 return {
   {
     "simrat39/rust-tools.nvim",
+    dependencies = { "mason.nvim" },
     event = { "BufReadPre *.rs", "BufNewFile *.rs" },
     opts = function()
+      local mason_registry = require("mason-registry")
+      local codelldb = mason_registry.get_package("codelldb")
+      local extension_path = codelldb:get_install_path() .. "/extension/"
+      local codelldb_path = extension_path .. "adapter/codelldb"
+      local liblldb_path = extension_path .. "lldb/lib/liblldb.so"
+
       return {
         dap = {
           adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path),
@@ -139,9 +141,7 @@ return {
       load_langs = { "es", "en-US" },
       init_check = true,
       path = vim.fn.stdpath("data") .. "/ltex",
-      log_level = "trace",
       server_opts = {
-        cmd = { ltex_bin },
         capabilities = attach.capabilities,
         on_attach = attach.on_attach,
         settings = {

@@ -1,8 +1,3 @@
-local debugpy = vim.env.HOME .. "/lsp-dap/debugpy/bin/python"
-local codelldb_path = vim.env.HOME .. "/lsp-dap/codelldb/extension/adapter/codelldb"
-local js_dap_path = vim.env.HOME .. "/lsp-dap/js-debug/src/dapDebugServer.js"
-local perl_dap_path = vim.env.HOME .. "/lsp-dap/vscode-perl-debug/out/debugAdapter.js"
-
 local dap_icons = require("kyvernetes.config").dap_icons
 
 return {
@@ -48,7 +43,8 @@ return {
           },
         },
         config = function()
-          require("dap-python").setup(debugpy)
+          local debugpy_path = require("mason-registry").get_package("debugpy"):get_install_path()
+          require("dap-python").setup(debugpy_path .. "/venv/bin/python")
         end,
       },
       { "theHamsta/nvim-dap-virtual-text", opts = {} },
@@ -109,7 +105,7 @@ return {
           host = "localhost",
           port = "${port}",
           executable = {
-            command = codelldb_path,
+            command = "codelldb",
             args = {
               "--port",
               "${port}",
@@ -156,7 +152,8 @@ return {
             command = "node",
             -- 💀 Make sure to update this path to point to your installation
             args = {
-              js_dap_path,
+              require("mason-registry").get_package("js-debug-adapter"):get_install_path()
+                .. "/js-debug/src/dapDebugServer.js",
               "${port}",
             },
           },
@@ -187,13 +184,8 @@ return {
       if not dap.adapters["perl"] then
         require("dap").adapters["perl"] = {
           type = "executable",
-          executable = {
-            command = "node",
-            -- 💀 Make sure to update this path to point to your installation
-            args = {
-              perl_dap_path,
-            },
-          },
+          command = vim.env.MASON .. "/bin/perl-debug-adapter",
+          args = {},
         }
       end
       if not dap.configurations["perl"] then

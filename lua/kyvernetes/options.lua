@@ -87,7 +87,7 @@ _G.custom_foldtext = function()
     .. " "
     .. vim.trim(vim.fn.getline(vim.v.foldstart))
     .. " "
-  local end_part = " " .. tostring(line_cnt) .. " "
+  local end_part = " " .. tostring(line_cnt) .. " "
   local width = vim.go.columns - vim.fn.getwininfo(vim.api.nvim_get_current_win())[1].textoff
   start_part = start_part:sub(1, width - #end_part)
   local mid_part = string.rep("⋅", width - #end_part - #start_part)
@@ -95,3 +95,8 @@ _G.custom_foldtext = function()
 end
 
 o.foldtext = "v:lua.custom_foldtext()"
+-- if vim.treesitter.foldtext then
+--   o.foldtext = "v:lua.vim.treesitter.foldtext()"
+-- else
+--   o.foldtext = "v:lua.custom_foldtext()"
+-- end

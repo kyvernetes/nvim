@@ -45,7 +45,7 @@ return {
     },
     init = function()
       vim.opt.foldmethod = "expr"
-      vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+      vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
     end,
     config = function()
       local should_disable = function(lang, buf)

@@ -1,9 +1,6 @@
 local uv = vim.uv
 local ft_to_linters = require("kyvernetes.config").linters_by_ft
 
-local sonarlint_server = vim.env.HOME .. "/lsp-dap/sonarlint/extension/server/sonarlint-ls.jar"
-local sonarlint_analyzers_prefix = vim.env.HOME .. "/lsp-dap/sonarlint/extension/analyzers"
-
 -- borrowed (stolen) from https://github.com/stevearc/dotfiles/blob/master/.config/nvim/lua/plugins/lint.lua
 return {
   {
@@ -58,23 +55,26 @@ return {
   },
   {
     "https://gitlab.com/schrieveslaach/sonarlint.nvim.git",
+    dependencies = { "mason.nvim" },
     ft = { "c", "cpp", "cuda", "python" },
-    opts = {
-      server = {
-        cmd = {
-          "java",
-          "-jar",
-          sonarlint_server,
-          "-stdio",
-          "-analyzers",
-          sonarlint_analyzers_prefix .. "sonarcfamily.jar",
-          sonarlint_analyzers_prefix .. "sonarpython.jar",
+    opts = function()
+      local sonar_path =
+        require("mason-registry").get_package("sonarlint-language-server"):get_install_path()
+      return {
+        server = {
+          cmd = {
+            "sonarlint-language-server",
+            "-stdio",
+            "-analyzers",
+            sonar_path .. "/extension/analyzers/sonarpython.jar",
+            sonar_path .. "/extension/analyzers/sonarcfamily.jar",
+          },
         },
-      },
-      filetypes = {
-        "python",
-        "cpp",
-      },
-    },
+        filetypes = {
+          "python",
+          "cpp",
+        },
+      }
+    end,
   },
 }

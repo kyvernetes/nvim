@@ -1,7 +1,6 @@
 local fn = vim.fn
 local diagnostic_icons = require("kyvernetes.config").diagnostics_icons
 
-local lua_ls = vim.env.HOME .. "/lsp-dap/lua-language-server/bin/lua-language-server"
 local perl_ok, perlprefix = pcall(fn.system, { "plenv", "prefix" })
 
 local attach = require("kyvernetes.plugins.lsp.attach")
@@ -36,6 +35,7 @@ return {
           },
         },
       },
+      "mason.nvim",
     },
     keys = {
       {
@@ -85,7 +85,7 @@ return {
 
       -- attaching one lsp at a time
       -- astro
-      attach.setup("astro")
+      -- attach.setup("astro")
 
       -- ansible
       attach.setup("ansiblels")
@@ -209,7 +209,6 @@ return {
 
       -- lua
       attach.setup("lua_ls", {
-        cmd = { lua_ls },
         settings = {
           Lua = {
             completion = { callSnippet = "Replace" },
@@ -358,5 +357,41 @@ return {
         silent = true,
       },
     },
+  },
+  {
+    "williamboman/mason.nvim",
+    build = ":MasonUpdate",
+    opts = {
+      ensure_installed = {
+        "codelldb",
+        "debugpy",
+        "hadolint",
+        "js-debug-adapter",
+        "ltex-ls",
+        "lua-language-server",
+        "marksman",
+        "perl-debug-adapter",
+        "sonarlint-language-server",
+        "verible",
+      },
+    },
+    ---@param opts MasonSettings | {ensure_installed: string[]}
+    config = function(_, opts)
+      require("mason").setup(opts)
+      local mr = require("mason-registry")
+      local function ensure_installed()
+        for _, tool in ipairs(opts.ensure_installed) do
+          local p = mr.get_package(tool)
+          if not p:is_installed() then
+            p:install()
+          end
+        end
+      end
+      if mr.refresh then
+        mr.refresh(ensure_installed)
+      else
+        ensure_installed()
+      end
+    end,
   },
 }
