@@ -2,7 +2,6 @@ return {
   {
     "HiPhish/rainbow-delimiters.nvim",
     event = { "BufReadPre", "BufNewFile" },
-    branch = "use-children",
     config = function()
       local rainbow_delimiters = require("rainbow-delimiters")
 

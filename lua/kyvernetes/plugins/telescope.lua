@@ -1,6 +1,7 @@
 return {
   { "nvim-telescope/telescope-project.nvim" },
   { "ThePrimeagen/git-worktree.nvim" },
+  { "debugloop/telescope-undo.nvim" },
   { "AckslD/nvim-neoclip.lua", opts = {}, event = "VeryLazy" },
   {
     "nvim-telescope/telescope.nvim",
@@ -45,6 +46,13 @@ return {
           end
         end,
         desc = "Find Files (root dir)",
+      },
+      {
+        "<leader>ut",
+        function()
+          require("telescope").extensions.undo.undo()
+        end,
+        desc = "[U]ndo [T]ree",
       },
       {
         "<leader>bg",
@@ -144,6 +152,14 @@ return {
         extensions = {
           file_browser = {
             theme = "dropdown",
+          },
+          undo = {
+            side_by_side = true,
+            layout_strategy = "vertical",
+            diff_context_lines = 7,
+            layout_config = {
+              preview_height = 0.6,
+            },
           },
         },
       })

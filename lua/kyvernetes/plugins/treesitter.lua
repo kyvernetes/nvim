@@ -23,6 +23,7 @@ return {
         opts = {},
       },
       { "nvim-treesitter/nvim-treesitter-textobjects" },
+      { "luckasRanarison/tree-sitter-hypr" },
       {
         "nvim-treesitter/nvim-treesitter-context",
         keys = {
@@ -56,6 +57,17 @@ return {
         end
       end
 
+      local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
+      ---@diagnostic disable-next-line: inject-field
+      parser_config.hypr = {
+        install_info = {
+          url = "https://github.com/luckasRanarison/tree-sitter-hypr",
+          files = { "src/parser.c" },
+          branch = "master",
+        },
+        filetype = "hypr",
+      }
+
       require("nvim-treesitter.configs").setup({
         ensure_installed = {
           "astro",
@@ -85,6 +97,7 @@ return {
           "gowork",
           "html",
           "http",
+          "hypr",
           "java",
           "javascript",
           "jq",

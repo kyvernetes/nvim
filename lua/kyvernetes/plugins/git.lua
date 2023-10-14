@@ -1,6 +1,11 @@
 return {
   { "rawnly/gist.nvim", cmd = { "CreateGist", "CreateGistFromFile" } },
   {
+    "tpope/vim-fugitive",
+    cmd = { "Git", "G", "Gvsplit", "Gvdiffsplit", "Gwrite", "Ggrep", "GDelete", "GMove" },
+    keys = { { "<F3>", "<cmd>Git blame<cr>", desc = "Git blame" } },
+  },
+  {
     "lewis6991/gitsigns.nvim",
     event = { "BufReadPost", "BufNewFile" },
     opts = {

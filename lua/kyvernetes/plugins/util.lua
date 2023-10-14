@@ -10,17 +10,6 @@ return {
     end,
   },
   {
-    "mbbill/undotree",
-    cmd = "UndotreeToggle",
-    keys = {
-      {
-        "<F3>",
-        "<cmd>UndotreeToggle<cr>",
-        desc = "Undotree",
-      },
-    },
-  },
-  {
     "ojroques/nvim-osc52",
     cond = os.getenv("SSH_CLIENT") ~= nil,
     event = "VeryLazy",

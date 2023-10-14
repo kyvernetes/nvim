@@ -1,7 +1,7 @@
 return {
   {
     "sourcegraph/sg.nvim",
-    -- event = "VeryLazy",
+    event = "VeryLazy",
     opts = {},
   },
 }

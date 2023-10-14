@@ -152,4 +152,26 @@ return {
       },
     },
   },
+  {
+    "tomtomjhj/coq-lsp.nvim",
+    ft = "coq",
+    dependencies = {
+      "whonore/Coqtail",
+    },
+    init = function()
+      vim.g.loaded_coqtail = 1
+      vim.g["coqtail#supported"] = 0
+    end,
+    opts = {
+      lsp = {
+        on_attach = attach.on_attach,
+        -- coq-lsp server initialization configurations, defined here:
+        -- https://github.com/ejgallego/coq-lsp/blob/main/editor/code/src/config.ts#L3
+        -- Documentations are at https://github.com/ejgallego/coq-lsp/blob/main/editor/code/package.json.
+        init_options = {
+          show_notices_as_diagnostics = true,
+        },
+      },
+    },
+  },
 }

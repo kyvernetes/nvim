@@ -31,7 +31,7 @@ return {
           },
           {
             sign = {
-              name = { "GitSigns" },
+              namespace = { "gitsigns" },
               colwidth = 1,
               auto = false,
               wrap = true,
